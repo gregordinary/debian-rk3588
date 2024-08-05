@@ -16,8 +16,8 @@ main() {
     # file media is sized with the number between 'mmc_' and '.img'
     #   use 'm' for 1024^2 and 'g' for 1024^3
     local media='mmc_2g.img' # or block device '/dev/sdX'
-    local deb_dist='bookworm'
-    local hostname='nanopi-r6c'
+    local deb_dist='trixie'
+    local hostname='nanopi-r6s'
     local acct_uid='debian'
     local acct_pass='debian'
     local extra_pkgs='curl, pciutils, sudo, unzip, wget, xxd, xz-utils, zip, zstd'
@@ -56,8 +56,8 @@ main() {
     local cache="cache.$deb_dist"
 
     # linux firmware
-    local lfw=$(download "$cache" 'https://mirrors.edge.kernel.org/pub/linux/kernel/firmware/linux-firmware-20230515.tar.xz')
-    local lfwsha='8b1acfa16f1ee94732a6acb50d9d6c835cf53af11068bd89ed207bbe04a1e951'
+    local lfw=$(download "$cache" 'https://mirrors.edge.kernel.org/pub/linux/kernel/firmware/linux-firmware-20240709.tar.xz')
+    local lfwsha='719662d2e8644c097f9a0bfb6e4c97280f8b2943e7bd9b47f77cf039412f5b14'
     [ "$lfwsha" = $(sha256sum "$lfw" | cut -c1-64) ] || { echo "invalid hash for $lfw"; exit 5; }
 
     # u-boot
@@ -455,4 +455,3 @@ fi
 cd "$(dirname "$(realpath "$0")")"
 check_mount_only "$@"
 main "$@"
-

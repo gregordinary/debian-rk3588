@@ -1,4 +1,4 @@
-## u-boot v2024.01-rc4 for the nanopi-r6c
+## u-boot v2024.01-rc4 for the nanopi-r6s
 
 <i>Note: This script is intended to be run from a 64 bit arm device such as a rock-5b or an odroid m1.</i>
 
@@ -28,4 +28,3 @@ sh make_uboot.sh clean
 ```
 
 <br/>
-

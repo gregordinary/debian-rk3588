@@ -1,4 +1,4 @@
-## linux kernel for the nanopi-r6
+## Mainline Linux Kernel for the NanoPi-R6S
 
 <i>Note: This script is intended to be run from a 64 bit arm device such as an odroid m1 or a rock 5b.</i>
 
@@ -31,4 +31,3 @@ sudo sh install_kernel.sh
 ```
 
 <br/>
-

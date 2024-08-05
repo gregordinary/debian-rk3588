@@ -1,4 +1,4 @@
-## linux device tree for the nanopi-r6c
+## Linux Device Tree for the NanoPi R6S
 
 <br/>
 
@@ -7,7 +7,7 @@
 sh make_dtb.sh
 ```
 
-<i>the build will produce the target file rk3588-nanopi-r6c.dtb</i>
+<i>the build will produce the target file rk3588s-nanopi-r6s.dtb</i>
 
 <br/>
 
@@ -24,4 +24,3 @@ sh make_dtb.sh links
 ```
 sh make_dtb.sh clean
 ```
-

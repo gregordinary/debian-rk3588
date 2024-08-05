@@ -11,7 +11,7 @@ debian: screen uboot dtb debian/mmc_2g.img kernel
 	sudo sh debian/install_kernel.sh
 	@echo "debian image ready"
 
-dtb: dtb/rk3588s-nanopi-r6c.dtb
+dtb: dtb/rk3588s-nanopi-r6s.dtb
 	@echo "device tree binaries ready"
 
 kernel: screen kernel/linux-image-*_arm64.deb
@@ -28,11 +28,11 @@ package-%: all
 
 	@install -vm 644 uboot/idbloader.img distfiles
 	@install -vm 644 uboot/u-boot.itb distfiles
-	@install -vm 644 dtb/rk3588s-nanopi-r6c.dtb distfiles
+	@install -vm 644 dtb/rk3588s-nanopi-r6s.dtb distfiles
 	@install -vm 644 kernel/linux-image-*_arm64.deb distfiles
 	@install -vm 644 kernel/linux-headers-*_arm64.deb distfiles
-	@install -vm 644 debian/mmc_2g.img distfiles/nanopi-r6c_$(LDIST)-$*.img
-	@xz -zve8 distfiles/nanopi-r6c_$(LDIST)-$*.img
+	@install -vm 644 debian/mmc_2g.img distfiles/nanopi-r6s_$(LDIST)-$*.img
+	@xz -zve8 distfiles/nanopi-r6s_$(LDIST)-$*.img
 
 	@cd distfiles ; sha256sum * > sha256sums.txt
 
@@ -52,7 +52,7 @@ endif
 debian/mmc_2g.img:
 	sudo sh debian/make_debian_img.sh nocomp
 
-dtb/rk3588s-nanopi-r6c.dtb:
+dtb/rk3588s-nanopi-r6s.dtb:
 	sh dtb/make_dtb.sh cp
 
 kernel/linux-image-*_arm64.deb:
@@ -63,4 +63,3 @@ uboot/idbloader.img uboot/u-boot.itb:
 
 
 .PHONY: all debian dtb kernel uboot package-* clean screen
-

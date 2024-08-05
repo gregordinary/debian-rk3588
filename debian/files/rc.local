@@ -54,4 +54,3 @@ else
     chmod 774 "$this"
     reboot
 fi
-

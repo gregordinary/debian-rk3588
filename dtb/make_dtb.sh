@@ -9,8 +9,8 @@ set -e
 #   5: invalid file hash
 
 main() {
-    local linux='https://git.kernel.org/torvalds/t/linux-6.7-rc7.tar.gz'
-    local lxsha='d0c92280db03d6f776d6f67faf035eba904bc5f2a04a807dfab77d1ebce39b02'
+    local linux='https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.10.1.tar.xz'
+    local lxsha='70109dfd1cd1c5f8a58eb1cb37122b9bf93f9c6a6280bf91019263c7339cf76b'
 
     local lf="$(basename "$linux")"
     local lv="$(echo "$lf" | sed -nE 's/linux-(.*)\.tar\..z/\1/p')"
@@ -19,7 +19,7 @@ main() {
         rm -f *.dtb *-top.dts
         find . -maxdepth 1 -type l -delete
         rm -rf "linux-$lv"
-        echo '\nclean complete\n'
+        echo -e '\nclean complete\n'
         exit 0
     fi
 
@@ -27,10 +27,10 @@ main() {
 
     if ! [ -e "$lf" ]; then
         if [ -e "../kernel/$lf" ]; then
-            echo "using local copy of linux $lv"
+            echo -e "using local copy of linux $lv"
             cp -v "../kernel/$lf" .
         elif [ -e "../kernel/kernel-$lv/$lf" ]; then
-            echo "using local copy of linux $lv"
+            echo -e "using local copy of linux $lv"
             cp -v "../kernel/kernel-$lv/$lf" .
         else
             print_hdr "downloading linux $lv"
@@ -39,7 +39,7 @@ main() {
     fi
 
     if [ "_$lxsha" != "_$(sha256sum "$lf" | cut -c1-64)" ]; then
-        echo "invalid hash for linux source file: $lf"
+        echo -e "invalid hash for linux source file: $lf"
         exit 5
     fi
 
@@ -54,22 +54,22 @@ main() {
     fi
 
     if is_param 'links' "$@"; then
-        local rkf rkfl='rk3588s-nanopi-r6c.dts rk3588s.dtsi rk3588-pinctrl.dtsi rockchip-pinconf.dtsi'
+        local rkf rkfl='rk3588s-nanopi-r6s.dts rk3588s.dtsi rk3588-pinctrl.dtsi rockchip-pinconf.dtsi'
         for rkf in $rkfl; do
             ln -sfv "$rkpath/$rkf"
         done
-        echo '\nlinks created\n'
+        echo -e '\nlinks created\n'
         exit 0
     fi
 
     # build
-    local dt dts='rk3588s-nanopi-r6c'
+    local dt dts='rk3588s-nanopi-r6s'
     local fldtc='-Wno-interrupt_provider -Wno-unique_unit_address -Wno-unit_address_vs_reg -Wno-avoid_unnecessary_addr_size -Wno-alias_paths -Wno-graph_child_address -Wno-simple_bus_reg'
     for dt in $dts; do
         gcc -I "linux-$lv/include" -E -nostdinc -undef -D__DTS__ -x assembler-with-cpp -o "${dt}-top.dts" "$rkpath/${dt}.dts"
         dtc -I dts -O dtb -b 0 ${fldtc} -o "${dt}.dtb" "${dt}-top.dts"
         is_param 'cp' "$@" && cp_to_debian "${dt}.dtb"
-        echo "\n${cya}device tree ready: ${dt}.dtb${rst}\n"
+        echo -e "\n${cya}device tree ready: ${dt}.dtb${rst}\n"
     done
 }
 
@@ -78,7 +78,7 @@ cp_to_debian() {
     local deb_dist=$(cat "../debian/make_debian_img.sh" | sed -n 's/\s*local deb_dist=.\([[:alpha:]]\+\)./\1/p')
     [ -z "$deb_dist" ] && return
     local cdir="../debian/cache.$deb_dist"
-    echo '\ncopying to debian cache...'
+    echo -e '\ncopying to debian cache...'
     sudo mkdir -p "$cdir"
     sudo cp -v "$target" "$cdir"
 }
@@ -103,15 +103,15 @@ check_installed() {
     done
 
     if [ ! -z "$todo" ]; then
-        echo "this script requires the following packages:${bld}${yel}$todo${rst}"
-        echo "   run: ${bld}${grn}sudo apt update && sudo apt -y install$todo${rst}\n"
+        echo -e "this script requires the following packages:${bld}${yel}$todo${rst}"
+        echo -e "   run: ${bld}${grn}sudo apt update && sudo apt -y install$todo${rst}\n"
         exit 1
     fi
 }
 
 print_hdr() {
     local msg="$1"
-    echo "\n${h1}$msg...${rst}"
+    echo -e "\n${h1}$msg...${rst}"
 }
 
 rst='\033[m'
@@ -126,4 +126,3 @@ h1="${blu}==>${rst} ${bld}"
 
 cd "$(dirname "$(realpath "$0")")"
 main "$@"
-

@@ -1,9 +1,9 @@
-# nanopi-r6
-#### *Stock Debian ARM64 Linux for the NanoPi R6C*
+# Debian-NanoPi-R6S
+#### *Stock Debian ARM64 Linux for the NanoPi R6S*
 
-This Debian ARM64 Linux image is built directly from official packages using the Debian [Debootstrap](https://wiki.debian.org/Debootstrap) utility, see: https://github.com/inindev/nanopi-r6/blob/main/debian/make_debian_img.sh#L128
+This Debian ARM64 Linux image is built directly from official packages using the Debian [Debootstrap](https://wiki.debian.org/Debootstrap) utility, see: https://github.com/gregordinary/debian-nanopi-r6s/blob/main/debian/make_debian_img.sh#L128
 
-Patches are directly available from the Debian repos using the built-in apt package manager, see: https://github.com/inindev/nanopi-r6/blob/main/debian/make_debian_img.sh#L355-L362
+Patches are directly available from the Debian repos using the built-in apt package manager, see: https://github.com/gregordinary/debian-nanopi-r6s/blob/main/debian/make_debian_img.sh#L355-L362
 
 * Note: The kernel in this bundle is from kernel.org and will not get updates from debian.
 
@@ -14,7 +14,7 @@ Patches are directly available from the Debian repos using the built-in apt pack
 
 **1. download the appropriate image**
 ```
-wget https://github.com/inindev/nanopi-r6/releases/download/v12-6.7-rc5/nanopi-r6c_bookworm-v12-6.7-rc5.img.xz
+wget #
 ```
 
 <br/>
@@ -39,11 +39,11 @@ brw-rw---- 1 root disk 8, 0 Mar 19 21:08 /dev/sda
 **3. in the case above, substitute 'a' for 'X' in the command below (for /dev/sda)**
 ```
 sudo su
-xzcat nanopi-r6c_bookworm-v12-6.7-rc5.img.xz > /dev/sdX
+xzcat nanopi-r6s_bookworm-v12-6.7-rc5.img.xz > /dev/sdX
 sync
 ```
 
-#### when the micro sd has finished imaging, eject and use it to boot the nanopi r6c to finish setup
+#### when the micro sd has finished imaging, eject and use it to boot the nanopi r6s to finish setup
 
 <br/>
 
@@ -111,9 +111,9 @@ Using the steps in the first section above, create a removable MMC card and boot
 
 **2. download the appropriate image to the booted MMC card and image the internal eMMC**
 ```
-wget https://github.com/inindev/nanopi-r6/releases/download/v12-6.7-rc5/nanopi-r6c_bookworm-v12-6.7-rc5.img.xz
+wget #
 sudo su
-xzcat nanopi-r6c_bookworm-v12-6.7-rc5.img.xz > /dev/mmcblk1
+xzcat nanopi-r6s_bookworm-v12-6.7-rc5.img.xz > /dev/mmcblk1
 sync
 ```
 
@@ -142,9 +142,9 @@ Using the steps in the first section above, create a removable MMC card and boot
 
 **2. download the image to the booted MMC card and image the internal NVMe**
 ```
-wget https://github.com/inindev/nanopi-r6/releases/download/v12-6.7-rc5/nanopi-r6c_bookworm-v12-6.7-rc5.img.xz
+wget #
 sudo su
-xzcat nanopi-r6c_bookworm-v12-6.7-rc5.img.xz > /dev/nvme0n1
+xzcat nanopi-r6s_bookworm-v12-6.7-rc5.img.xz > /dev/nvme0n1
 sync
 ```
 
@@ -154,8 +154,8 @@ sync
 
 The last step is to prepare the internal eMMC to host u-boot. The eMMC must not contain a bootable partition or it will be preferred for boot over the internal NVMe. Start by downloading the two u-boot files:
 ```
-wget https://github.com/inindev/nanopi-r6/releases/download/v12-6.7-rc5/idbloader.img
-wget https://github.com/inindev/nanopi-r6/releases/download/v12-6.7-rc5/u-boot.itb
+wget #
+wget #
 ```
 
 Erase the internal eMMC (the device is actually ```/dev/mmcblk1``` but X is placed where 1 belongs to prevent a copy paste mistake)
@@ -178,7 +178,7 @@ Note: Once booted, ```sudo apt update``` then ```sudo apt upgrade``` to get the 
 <br/>
 
 ---
-### building debian bookworm arm64 for the nanopi r6c from scratch
+### building debian bookworm arm64 for the nanopi r6s from scratch
 
 <br/>
 
@@ -188,8 +188,8 @@ The build script builds native arm64 binaries and thus needs to be run from an a
 
 **1. clone the repo**
 ```
-git clone https://github.com/inindev/nanopi-r6.git
-cd nanopi-r6
+git clone https://github.com/gregordinary/debian-nanopi-r6s.git
+cd debian-nanopi-r6s
 ```
 
 <br/>

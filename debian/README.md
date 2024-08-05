@@ -1,4 +1,4 @@
-## debian bookworm linux for the rock-5b
+## Debian Linux (Trixie) for the NanoPi-R6S
 
 <i>Note: This script is intended to be run from a 64 bit arm device such as an odroid m1 or a raspberry pi4.</i>
 
@@ -35,7 +35,7 @@ sync
 ```
 media='mmc_2g.img' # or block device '/dev/sdX'
 deb_dist='bookworm'
-hostname='rock5b-arm64'
+hostname='nanopi-r6s'
 acct_uid='debian'
 acct_pass='debian'
 disable_ipv6=true
