@@ -4,7 +4,7 @@
 
 <br/>
 
-**1. build u-boot images for the nanopi-r6c**
+**1. build u-boot images for the nanopi-r6s**
 ```
 sh make_uboot.sh
 ```

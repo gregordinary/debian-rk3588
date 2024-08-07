@@ -2,7 +2,7 @@
 
 <br/>
 
-**build device the tree for the nanopi-r6c**
+**build device the tree for the nanopi-r6s**
 ```
 sh make_dtb.sh
 ```
@@ -16,7 +16,7 @@ sh make_dtb.sh
 sh make_dtb.sh links
 ```
 
-<i>convenience link to rk3588-nanopi-r6c.dts and other relevant device tree files will be created in the project directory</i>
+<i>convenience link to rk3588s-nanopi-r6s.dts and other relevant device tree files will be created in the project directory</i>
 
 <br/>
 
