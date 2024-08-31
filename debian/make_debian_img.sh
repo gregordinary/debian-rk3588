@@ -56,8 +56,8 @@ main() {
     local cache="cache.$deb_dist"
 
     # linux firmware
-    local lfw=$(download "$cache" 'https://mirrors.edge.kernel.org/pub/linux/kernel/firmware/linux-firmware-20240709.tar.xz')
-    local lfwsha='719662d2e8644c097f9a0bfb6e4c97280f8b2943e7bd9b47f77cf039412f5b14'
+    local lfw=$(download "$cache" 'https://mirrors.edge.kernel.org/pub/linux/kernel/firmware/linux-firmware-20240811.tar.xz')
+    local lfwsha='58f1a14b800e3d1967986197d83c81f1ad14b7898a557133c58df0c02c538082'
     [ "$lfwsha" = $(sha256sum "$lfw" | cut -c1-64) ] || { echo "invalid hash for $lfw"; exit 5; }
 
     # u-boot
