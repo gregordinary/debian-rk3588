@@ -12,25 +12,25 @@ frequencies based on (among other things) silicon quality.
 
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 ---
- arch/arm64/boot/dts/rockchip/rk3588s.dtsi | 452 ++++++++++++++++++++++
+ arch/arm64/boot/dts/rockchip/rk3588-base.dtsi | 452 ++++++++++++++++++++++
  1 file changed, 452 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3588s.dtsi b/arch/arm64/boot/dts/rockchip/rk3588s.dtsi
+diff --git a/arch/arm64/boot/dts/rockchip/rk3588-base.dtsi b/arch/arm64/boot/dts/rockchip/rk3588-base.dtsi
 index be694aaef7d0..e7ebeda1c799 100644
---- a/arch/arm64/boot/dts/rockchip/rk3588s.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3588s.dtsi
+--- a/arch/arm64/boot/dts/rockchip/rk3588-base.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3588-base.dtsi
 @@ -10,6 +10,7 @@
  #include <dt-bindings/reset/rockchip,rk3588-cru.h>
  #include <dt-bindings/phy/phy.h>
  #include <dt-bindings/ata/ahci.h>
 +#include <dt-bindings/thermal/thermal.h>
- 
+
  / {
  	compatible = "rockchip,rk3588";
 @@ -18,6 +19,215 @@ / {
  	#address-cells = <2>;
  	#size-cells = <2>;
- 
+
 +	cluster0_opp_table: opp-table-cluster0 {
 +		compatible = "operating-points-v2";
 +		opp-shared;
@@ -310,7 +310,7 @@ index be694aaef7d0..e7ebeda1c799 100644
 @@ -362,6 +580,230 @@ spll: clock-0 {
  		#clock-cells = <0>;
  	};
- 
+
 +	thermal_zones: thermal-zones {
 +		soc_thermal: soc-thermal {
 +			polling-delay-passive = <20>; /* milliseconds */
@@ -541,7 +541,7 @@ index be694aaef7d0..e7ebeda1c799 100644
 @@ -496,6 +938,16 @@ sys_grf: syscon@fd58c000 {
  		reg = <0x0 0xfd58c000 0x0 0x1000>;
  	};
- 
+
 +	bigcore0_grf: syscon@fd590000 {
 +		compatible = "rockchip,rk3588-bigcore0-grf", "syscon";
 +		reg = <0x0 0xfd590000 0x0 0x100>;
@@ -555,6 +555,5 @@ index be694aaef7d0..e7ebeda1c799 100644
  	php_grf: syscon@fd5b0000 {
  		compatible = "rockchip,rk3588-php-grf", "syscon";
  		reg = <0x0 0xfd5b0000 0x0 0x1000>;
--- 
+--
 2.42.0
-

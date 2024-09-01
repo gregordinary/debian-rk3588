@@ -1,0 +1,33 @@
+diff --git a/arch/arm64/boot/dts/rockchip/rk3588-base.dtsi b/arch/arm64/boot/dts/rockchip/rk3588-base.dtsi
+index d909850..82fe531 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3588-base.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3588-base.dtsi
+@@ -8,6 +8,7 @@
+ #include <dt-bindings/interrupt-controller/irq.h>
+ #include <dt-bindings/power/rk3588-power.h>
+ #include <dt-bindings/reset/rockchip,rk3588-cru.h>
++#include <dt-bindings/soc/rockchip,vop2.h>
+ #include <dt-bindings/phy/phy.h>
+ #include <dt-bindings/ata/ahci.h>
+ #include <dt-bindings/thermal/thermal.h>
+@@ -2330,6 +2331,12 @@
+ 		#pwm-cells = <3>;
+ 		status = "disabled";
+ 	};
++	
++	display_subsystem: display-subsystem {
++		compatible = "rockchip,display-subsystem";
++		ports = <&vop_out>;
++	};
++
+ 
+ 	thermal_zones: thermal-zones {
+ 		/* sensor near the center of the SoC */
+@@ -2514,7 +2521,6 @@
+ 		pinctrl-1 = <&tsadc_shut>;
+ 		pinctrl-names = "gpio", "otpout";
+ 		#thermal-sensor-cells = <1>;
+-		status = "disabled";
+ 	};
+ 
+ 	saradc: adc@fec10000 {
