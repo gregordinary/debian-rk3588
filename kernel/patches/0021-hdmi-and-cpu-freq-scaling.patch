@@ -560,8 +560,3 @@ index d909850..df501b7 100644
  	};
 
  	saradc: adc@fec10000 {
-@@ -2797,4 +3255,3 @@
- };
-
- #include "rk3588-base-pinctrl.dtsi"
--
