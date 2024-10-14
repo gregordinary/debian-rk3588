@@ -17,7 +17,7 @@ main() {
     #   use 'm' for 1024^2 and 'g' for 1024^3
     local media='mmc_2g.img' # or block device '/dev/sdX'
     local deb_dist='trixie'
-    local hostname='nanopi-r6s'
+    local hostname='turing-rk1'
     local acct_uid='debian'
     local acct_pass='debian'
     local extra_pkgs='curl, pciutils, sudo, unzip, wget, xxd, xz-utils, zip, zstd'
@@ -56,8 +56,8 @@ main() {
     local cache="cache.$deb_dist"
 
     # linux firmware
-    local lfw=$(download "$cache" 'https://mirrors.edge.kernel.org/pub/linux/kernel/firmware/linux-firmware-20240811.tar.xz')
-    local lfwsha='58f1a14b800e3d1967986197d83c81f1ad14b7898a557133c58df0c02c538082'
+    local lfw=$(download "$cache" 'https://mirrors.edge.kernel.org/pub/linux/kernel/firmware/linux-firmware-20240909.tar.xz')
+    local lfwsha='943fbd19883cf8eadf89e0b22422549db056557b1ecd30a56400615971369671'
     [ "$lfwsha" = $(sha256sum "$lfw" | cut -c1-64) ] || { echo "invalid hash for $lfw"; exit 5; }
 
     # u-boot
