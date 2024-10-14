@@ -17,8 +17,8 @@ config_fixups() {
 }
 
 main() {
-    local linux='https://git.kernel.org/torvalds/t/linux-6.11-rc5.tar.gz'
-    local lxsha='48a12488747ee494c312fb59cf8f070a7b1c0da1eaa563b558835e2003394999'
+    local linux='https://git.kernel.org/torvalds/t/linux-6.12-rc3.tar.gz'
+    local lxsha='c9b271cc559588796a80f06f4198a4de2823bc28cb5cd2632f3b80401035b91d'
 
     local lf="$(basename "$linux")"
     local lv="$(echo "$lf" | sed -nE 's/linux-(.*)\.tar\..z/\1/p')"
@@ -74,7 +74,7 @@ main() {
         make -C "kernel-$lv/linux-$lv" mrproper
         [ -z "$1" ] || echo "$1" > "kernel-$lv/linux-$lv/.version"
         config_fixups "kernel-$lv/linux-$lv"
-        cp ./r6s_config "kernel-$lv/linux-$lv/.config"
+        cp ./rk1_config "kernel-$lv/linux-$lv/.config"
         make -C "kernel-$lv/linux-$lv" ARCH=arm64 olddefconfig
     fi
 
