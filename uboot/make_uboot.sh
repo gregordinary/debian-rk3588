@@ -33,7 +33,7 @@ main() {
     check_installed 'bc' 'bison' 'flex' 'libssl-dev' 'make' 'python3-dev' 'python3-pyelftools' 'python3-setuptools' 'swig'
 
     if [ ! -d u-boot ]; then
-        git clone https://source.denx.de/u-boot/custodians/u-boot-rockchip.git u-boot
+        git clone https://source.denx.de/u-boot/u-boot.git u-boot
         git -C u-boot fetch --tags
     fi
 
@@ -53,7 +53,7 @@ main() {
     rm -f 'idbloader.img' 'u-boot.itb'
     if ! is_param 'inc' "$@"; then
         make -C u-boot distclean
-        make -C u-boot nanopi-r6s-rk3588s_defconfig
+        make -C u-boot turing-rk1-rk3588_defconfig
     fi
     make -C u-boot -j$(nproc) BL31="$atf_file" ROCKCHIP_TPL="$tpl_file"
     ln -sfv 'u-boot/idbloader.img'
