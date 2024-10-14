@@ -1,4 +1,4 @@
-## Debian Linux (Trixie) for the NanoPi-R6S
+## Debian Linux (Trixie) for the Turing-RK1
 
 <i>Note: This script is intended to be run from a 64 bit arm device such as an odroid m1 or a raspberry pi4.</i>
 
