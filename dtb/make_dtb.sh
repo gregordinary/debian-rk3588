@@ -9,8 +9,8 @@ set -e
 #   5: invalid file hash
 
 main() {
-    local linux='https://git.kernel.org/torvalds/t/linux-6.11-rc5.tar.gz'
-    local lxsha='48a12488747ee494c312fb59cf8f070a7b1c0da1eaa563b558835e2003394999'
+    local linux='https://git.kernel.org/torvalds/t/linux-6.12-rc3.tar.gz'
+    local lxsha='c9b271cc559588796a80f06f4198a4de2823bc28cb5cd2632f3b80401035b91d'
 
     local lf="$(basename "$linux")"
     local lv="$(echo "$lf" | sed -nE 's/linux-(.*)\.tar\..z/\1/p')"
@@ -54,7 +54,7 @@ main() {
     fi
 
     if is_param 'links' "$@"; then
-        local rkf rkfl='rk3588s-nanopi-r6s.dts rk3588s.dtsi rk3588-pinctrl.dtsi rockchip-pinconf.dtsi'
+        local rkf rkfl='rk3588-turing-rk1.dts rk3588.dtsi rk3588-pinctrl.dtsi rockchip-pinconf.dtsi'
         for rkf in $rkfl; do
             ln -sfv "$rkpath/$rkf"
         done
@@ -63,7 +63,7 @@ main() {
     fi
 
     # build
-    local dt dts='rk3588s-nanopi-r6s'
+    local dt dts='rk3588-turing-rk1.dts'
     local fldtc='-Wno-interrupt_provider -Wno-unique_unit_address -Wno-unit_address_vs_reg -Wno-avoid_unnecessary_addr_size -Wno-alias_paths -Wno-graph_child_address -Wno-simple_bus_reg'
     for dt in $dts; do
         gcc -I "linux-$lv/include" -E -nostdinc -undef -D__DTS__ -x assembler-with-cpp -o "${dt}-top.dts" "$rkpath/${dt}.dts"
