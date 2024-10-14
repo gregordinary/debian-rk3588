@@ -1,5 +1,5 @@
-# Debian-NanoPi-R6S
-#### *Stock Debian ARM64 Linux for the NanoPi R6S*
+# Debian-Turing-RK1
+#### *Stock Debian ARM64 Linux for the Turing RK1*
 
 This Debian ARM64 Linux image is built directly from official packages using the Debian [Debootstrap](https://wiki.debian.org/Debootstrap) utility, see: https://github.com/gregordinary/debian-nanopi-r6s/blob/main/debian/make_debian_img.sh#L128
 
