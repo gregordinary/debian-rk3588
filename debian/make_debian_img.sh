@@ -61,9 +61,26 @@ main() {
     [ "$lfwsha" = $(sha256sum "$lfw" | cut -c1-64) ] || { echo "invalid hash for $lfw"; exit 5; }
 
     # u-boot
-    local uboot_spl=$(download "$cache" 'https://github.com/inindev/nanopi-r6/releases/download/v12-6.7-rc5/idbloader.img')
+    local uboot_spl_url='https://github.com/inindev/nanopi-r6/releases/download/v12-6.7-rc5/idbloader.img'
+    local uboot_itb_url='https://github.com/inindev/nanopi-r6/releases/download/v12-6.7-rc5/u-boot.itb'
+    local uboot_spl_local='../uboot/idbloader.img'
+    local uboot_itb_local='../uboot/u-boot.itb'
+
+    # Check for local files first
+    if [ -f "$uboot_spl_local" ]; then
+        local uboot_spl="$uboot_spl_local"
+        echo "Using local idbloader.img"
+    else
+        local uboot_spl=$(download "$cache" "$uboot_spl_url")
+    fi
     [ -f "$uboot_spl" ] || { echo "unable to fetch $uboot_spl"; exit 4; }
-    local uboot_itb=$(download "$cache" 'https://github.com/inindev/nanopi-r6/releases/download/v12-6.7-rc5/u-boot.itb')
+
+    if [ -f "$uboot_itb_local" ]; then
+        local uboot_itb="$uboot_itb_local"
+        echo "Using local u-boot.itb"
+    else
+        local uboot_itb=$(download "$cache" "$uboot_itb_url")
+    fi
     [ -f "$uboot_itb" ] || { echo "unable to fetch: $uboot_itb"; exit 4; }
 
     # setup media
