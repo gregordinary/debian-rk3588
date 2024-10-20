@@ -130,7 +130,16 @@ main() {
     mkdir -p "$mountpt/usr/lib/firmware"
     local lfwn=$(basename "$lfw")
     local lfwbn="${lfwn%%.*}"
+
+    # Extract Rockchip and Realtek NIC firmware
     tar -C "$mountpt/usr/lib/firmware" --strip-components=1 --wildcards -xavf "$lfw" "$lfwbn/rockchip" "$lfwbn/rtl_nic"
+
+    # Extract Mali firmware
+    mkdir -p "$mountpt/lib/firmware/arm/mali/arch10.8"
+    tar -C "$mountpt/lib/firmware" --strip-components=2 --wildcards -xavf "$lfw" "$lfwbn/arm/mali_csffw.bin"
+
+    # Move Mali firmware to the correct location
+    mv "$mountpt/lib/firmware/mali_csffw.bin" "$mountpt/lib/firmware/arm/mali/arch10.8/mali_csffw.bin"
 
     # install debian linux from deb packages (debootstrap)
     print_hdr 'installing root filesystem from debian.org'
