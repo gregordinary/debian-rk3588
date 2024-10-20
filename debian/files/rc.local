@@ -1,12 +1,7 @@
 #!/bin/sh
-
-# Copyright (C) 2023, John Clark <inindev@gmail.com>
-
 set -e
-
 this=$(realpath $0)
 perm=$(stat -c %a $this)
-
 if [ 774 -eq $perm ]; then
     # expand fs
     resize2fs "$(findmnt -no source /)"
@@ -16,39 +11,39 @@ else
     # regen ssh keys
     dpkg-reconfigure openssh-server
     systemctl enable ssh.service
-
     # expand root parition & change uuid
     rp="$(findmnt -no source /)"
     rpn="$(echo "$rp" | grep -Eo '[[:digit:]]*$')"
     rd="/dev/$(lsblk -no pkname "$rp")"
     uuid="$(cat /proc/sys/kernel/random/uuid)"
     echo "size=+, uuid=$uuid" | sfdisk -f -N "$rpn" "$rd"
-
     # change rootfs uuid
     uuid="$(cat /proc/sys/kernel/random/uuid)"
     echo "changing rootfs uuid: $uuid"
     tune2fs -U "$uuid" "$rp"
     sed -i "s|$(findmnt -fsno source '/')|UUID=$uuid|" '/etc/fstab'
     /boot/mk_extlinux
+    
+    # Disable consistent network device naming
+    ln -sf /dev/null /etc/systemd/network/99-default.link
 
-    # generate random mac address
+    # Generate random MAC address
     macd=$(xxd -s250 -l6 -p /dev/urandom)
+    mac_address=$(printf '%012x' $((0x$macd & 0xfefffffffffc | 0x200000000000)) | sed 's/../&:/g;s/:$//')
 
-    cat <<-EOF > /etc/systemd/network/10-name-lan0.link
-	[Match]
-	Path=platform-a40c00000.pcie-pci-0003:31:00.0
-	[Link]
-	Name=lan0
-	MACAddress=$(printf '%012x' $((0x$macd & 0xfefffffffffc | 0x200000000000)) | sed 's/../&:/g;s/:$//')
-	EOF
+    # Create udev rule to maintain eth0 name
+    cat <<EOF > /etc/udev/rules.d/70-persistent-net.rules
+SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="$mac_address", ATTR{dev_id}=="0x0", ATTR{type}=="1", KERNEL=="eth*", NAME="eth0"
+EOF
 
-    cat <<-EOF > /etc/systemd/network/10-name-wan0.link
-	[Match]
-	Path=platform-fe1c0000.ethernet
-	[Link]
-	Name=wan0
-	MACAddress=$(printf '%012x' $((0x$macd & 0xfefffffffffc | 0x200000000001)) | sed 's/../&:/g;s/:$//')
-	EOF
+    # Create systemd link file
+    cat <<EOF > /etc/systemd/network/10-name-eth0.link
+[Match]
+Path=platform-fe1c0000.ethernet
+[Link]
+Name=eth0
+MACAddress=$mac_address
+EOF
 
     # setup for expand fs
     chmod 774 "$this"
